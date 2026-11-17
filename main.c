@@ -4,8 +4,10 @@
 #include <signal.h>
 #include <stdlib.h>
 
-// Include our modular sensor code
-#include "factory_sensors.h" 
+// Custom project headers
+#include "hierarchy.h"
+#include "variables.h"
+#include "logic.h"
 
 UA_Boolean running = true;
 
@@ -19,16 +21,21 @@ int main(void) {
     signal(SIGTERM, stopHandler);
 
     UA_Server *server = UA_Server_new();
-    UA_ServerConfig_setDefault(UA_Server_getConfig(server));
+    UA_ServerConfig *config = UA_Server_getConfig(server);
+    
+    // Set the default config for port 4840
+    UA_ServerConfig_setDefault(config);
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting OPC UA Factory Server...");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting OPC UA Manufacturing Server...");
 
-    // Setup our sensor variables in the server
-    define_object_and_variables(server);
-
-    // Tell the server to run the update_sensor_data function every 2000 milliseconds (2 seconds)
-    UA_UInt64 callbackId = 0;
-    UA_Server_addRepeatedCallback(server, update_sensor_data, NULL, 2000, &callbackId);
+    // 1. Build the physical factory hierarchy
+    build_factory_hierarchy(server);
+    
+    // 2. Inject production counters into the hierarchy
+    add_production_variables(server);
+    
+    // 3. Initialize the 5-second loop and start/stop methods
+    initialize_production_logic(server);
 
     UA_StatusCode retval = UA_Server_run(server, &running);
     UA_Server_delete(server);

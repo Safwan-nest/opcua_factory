@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 find_package(open62541 REQUIRED)
 
-# This must be the ONLY add_executable line in the file
-add_executable(factory_server main.c factory_sensors.c)
-
+# Updated to link the new hierarchy file
+add_executable(factory_server main.c hierarchy.c variables.c logic.c)
 target_link_libraries(factory_server open62541::open62541)
+

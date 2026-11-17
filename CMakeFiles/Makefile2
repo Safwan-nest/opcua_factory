@@ -85,12 +85,12 @@ clean: CMakeFiles/factory_server.dir/clean
 CMakeFiles/factory_server.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=1,2,3 "Built target factory_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=1,2,3,4,5 "Built target factory_server"
 .PHONY : CMakeFiles/factory_server.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/factory_server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saf/opcua_factory/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saf/opcua_factory/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/factory_server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/saf/opcua_factory/CMakeFiles 0
 .PHONY : CMakeFiles/factory_server.dir/rule
@@ -102,7 +102,7 @@ factory_server: CMakeFiles/factory_server.dir/rule
 # codegen rule for target.
 CMakeFiles/factory_server.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=1,2,3 "Finished codegen for target factory_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=1,2,3,4,5 "Finished codegen for target factory_server"
 .PHONY : CMakeFiles/factory_server.dir/codegen
 
 # clean rule for target.

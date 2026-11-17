@@ -129,29 +129,53 @@ factory_server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/build
 .PHONY : factory_server/fast
 
-factory_sensors.o: factory_sensors.c.o
-.PHONY : factory_sensors.o
+hierarchy.o: hierarchy.c.o
+.PHONY : hierarchy.o
 
 # target to build an object file
-factory_sensors.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/factory_sensors.c.o
-.PHONY : factory_sensors.c.o
+hierarchy.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/hierarchy.c.o
+.PHONY : hierarchy.c.o
 
-factory_sensors.i: factory_sensors.c.i
-.PHONY : factory_sensors.i
+hierarchy.i: hierarchy.c.i
+.PHONY : hierarchy.i
 
 # target to preprocess a source file
-factory_sensors.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/factory_sensors.c.i
-.PHONY : factory_sensors.c.i
+hierarchy.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/hierarchy.c.i
+.PHONY : hierarchy.c.i
 
-factory_sensors.s: factory_sensors.c.s
-.PHONY : factory_sensors.s
+hierarchy.s: hierarchy.c.s
+.PHONY : hierarchy.s
 
 # target to generate assembly for a file
-factory_sensors.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/factory_sensors.c.s
-.PHONY : factory_sensors.c.s
+hierarchy.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/hierarchy.c.s
+.PHONY : hierarchy.c.s
+
+logic.o: logic.c.o
+.PHONY : logic.o
+
+# target to build an object file
+logic.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/logic.c.o
+.PHONY : logic.c.o
+
+logic.i: logic.c.i
+.PHONY : logic.i
+
+# target to preprocess a source file
+logic.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/logic.c.i
+.PHONY : logic.c.i
+
+logic.s: logic.c.s
+.PHONY : logic.s
+
+# target to generate assembly for a file
+logic.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/logic.c.s
+.PHONY : logic.c.s
 
 main.o: main.c.o
 .PHONY : main.o
@@ -177,6 +201,30 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/main.c.s
 .PHONY : main.c.s
 
+variables.o: variables.c.o
+.PHONY : variables.o
+
+# target to build an object file
+variables.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/variables.c.o
+.PHONY : variables.c.o
+
+variables.i: variables.c.i
+.PHONY : variables.i
+
+# target to preprocess a source file
+variables.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/variables.c.i
+.PHONY : variables.c.i
+
+variables.s: variables.c.s
+.PHONY : variables.s
+
+# target to generate assembly for a file
+variables.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/factory_server.dir/build.make CMakeFiles/factory_server.dir/variables.c.s
+.PHONY : variables.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +234,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... factory_server"
-	@echo "... factory_sensors.o"
-	@echo "... factory_sensors.i"
-	@echo "... factory_sensors.s"
+	@echo "... hierarchy.o"
+	@echo "... hierarchy.i"
+	@echo "... hierarchy.s"
+	@echo "... logic.o"
+	@echo "... logic.i"
+	@echo "... logic.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... variables.o"
+	@echo "... variables.i"
+	@echo "... variables.s"
 .PHONY : help
 
 

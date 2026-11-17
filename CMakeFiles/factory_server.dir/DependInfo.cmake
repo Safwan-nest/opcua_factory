@@ -8,8 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/saf/opcua_factory/factory_sensors.c" "CMakeFiles/factory_server.dir/factory_sensors.c.o" "gcc" "CMakeFiles/factory_server.dir/factory_sensors.c.o.d"
+  "/home/saf/opcua_factory/hierarchy.c" "CMakeFiles/factory_server.dir/hierarchy.c.o" "gcc" "CMakeFiles/factory_server.dir/hierarchy.c.o.d"
+  "/home/saf/opcua_factory/logic.c" "CMakeFiles/factory_server.dir/logic.c.o" "gcc" "CMakeFiles/factory_server.dir/logic.c.o.d"
   "/home/saf/opcua_factory/main.c" "CMakeFiles/factory_server.dir/main.c.o" "gcc" "CMakeFiles/factory_server.dir/main.c.o.d"
+  "/home/saf/opcua_factory/variables.c" "CMakeFiles/factory_server.dir/variables.c.o" "gcc" "CMakeFiles/factory_server.dir/variables.c.o.d"
   "" "factory_server" "gcc" "CMakeFiles/factory_server.dir/link.d"
   )
 

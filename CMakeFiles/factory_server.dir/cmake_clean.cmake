@@ -1,9 +1,13 @@
 file(REMOVE_RECURSE
   "CMakeFiles/factory_server.dir/link.d"
-  "CMakeFiles/factory_server.dir/factory_sensors.c.o"
-  "CMakeFiles/factory_server.dir/factory_sensors.c.o.d"
+  "CMakeFiles/factory_server.dir/hierarchy.c.o"
+  "CMakeFiles/factory_server.dir/hierarchy.c.o.d"
+  "CMakeFiles/factory_server.dir/logic.c.o"
+  "CMakeFiles/factory_server.dir/logic.c.o.d"
   "CMakeFiles/factory_server.dir/main.c.o"
   "CMakeFiles/factory_server.dir/main.c.o.d"
+  "CMakeFiles/factory_server.dir/variables.c.o"
+  "CMakeFiles/factory_server.dir/variables.c.o.d"
   "factory_server"
   "factory_server.pdb"
 )

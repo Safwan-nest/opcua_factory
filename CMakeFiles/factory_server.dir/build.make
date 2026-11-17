@@ -86,35 +86,67 @@ CMakeFiles/factory_server.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/factory_server.dir/main.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/saf/opcua_factory/main.c -o CMakeFiles/factory_server.dir/main.c.s
 
-CMakeFiles/factory_server.dir/factory_sensors.c.o: CMakeFiles/factory_server.dir/flags.make
-CMakeFiles/factory_server.dir/factory_sensors.c.o: factory_sensors.c
-CMakeFiles/factory_server.dir/factory_sensors.c.o: CMakeFiles/factory_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/factory_server.dir/factory_sensors.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/factory_server.dir/factory_sensors.c.o -MF CMakeFiles/factory_server.dir/factory_sensors.c.o.d -o CMakeFiles/factory_server.dir/factory_sensors.c.o -c /home/saf/opcua_factory/factory_sensors.c
+CMakeFiles/factory_server.dir/hierarchy.c.o: CMakeFiles/factory_server.dir/flags.make
+CMakeFiles/factory_server.dir/hierarchy.c.o: hierarchy.c
+CMakeFiles/factory_server.dir/hierarchy.c.o: CMakeFiles/factory_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/factory_server.dir/hierarchy.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/factory_server.dir/hierarchy.c.o -MF CMakeFiles/factory_server.dir/hierarchy.c.o.d -o CMakeFiles/factory_server.dir/hierarchy.c.o -c /home/saf/opcua_factory/hierarchy.c
 
-CMakeFiles/factory_server.dir/factory_sensors.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/factory_server.dir/factory_sensors.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/saf/opcua_factory/factory_sensors.c > CMakeFiles/factory_server.dir/factory_sensors.c.i
+CMakeFiles/factory_server.dir/hierarchy.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/factory_server.dir/hierarchy.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/saf/opcua_factory/hierarchy.c > CMakeFiles/factory_server.dir/hierarchy.c.i
 
-CMakeFiles/factory_server.dir/factory_sensors.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/factory_server.dir/factory_sensors.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/saf/opcua_factory/factory_sensors.c -o CMakeFiles/factory_server.dir/factory_sensors.c.s
+CMakeFiles/factory_server.dir/hierarchy.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/factory_server.dir/hierarchy.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/saf/opcua_factory/hierarchy.c -o CMakeFiles/factory_server.dir/hierarchy.c.s
+
+CMakeFiles/factory_server.dir/variables.c.o: CMakeFiles/factory_server.dir/flags.make
+CMakeFiles/factory_server.dir/variables.c.o: variables.c
+CMakeFiles/factory_server.dir/variables.c.o: CMakeFiles/factory_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/factory_server.dir/variables.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/factory_server.dir/variables.c.o -MF CMakeFiles/factory_server.dir/variables.c.o.d -o CMakeFiles/factory_server.dir/variables.c.o -c /home/saf/opcua_factory/variables.c
+
+CMakeFiles/factory_server.dir/variables.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/factory_server.dir/variables.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/saf/opcua_factory/variables.c > CMakeFiles/factory_server.dir/variables.c.i
+
+CMakeFiles/factory_server.dir/variables.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/factory_server.dir/variables.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/saf/opcua_factory/variables.c -o CMakeFiles/factory_server.dir/variables.c.s
+
+CMakeFiles/factory_server.dir/logic.c.o: CMakeFiles/factory_server.dir/flags.make
+CMakeFiles/factory_server.dir/logic.c.o: logic.c
+CMakeFiles/factory_server.dir/logic.c.o: CMakeFiles/factory_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/factory_server.dir/logic.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/factory_server.dir/logic.c.o -MF CMakeFiles/factory_server.dir/logic.c.o.d -o CMakeFiles/factory_server.dir/logic.c.o -c /home/saf/opcua_factory/logic.c
+
+CMakeFiles/factory_server.dir/logic.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/factory_server.dir/logic.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/saf/opcua_factory/logic.c > CMakeFiles/factory_server.dir/logic.c.i
+
+CMakeFiles/factory_server.dir/logic.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/factory_server.dir/logic.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/saf/opcua_factory/logic.c -o CMakeFiles/factory_server.dir/logic.c.s
 
 # Object files for target factory_server
 factory_server_OBJECTS = \
 "CMakeFiles/factory_server.dir/main.c.o" \
-"CMakeFiles/factory_server.dir/factory_sensors.c.o"
+"CMakeFiles/factory_server.dir/hierarchy.c.o" \
+"CMakeFiles/factory_server.dir/variables.c.o" \
+"CMakeFiles/factory_server.dir/logic.c.o"
 
 # External object files for target factory_server
 factory_server_EXTERNAL_OBJECTS =
 
 factory_server: CMakeFiles/factory_server.dir/main.c.o
-factory_server: CMakeFiles/factory_server.dir/factory_sensors.c.o
+factory_server: CMakeFiles/factory_server.dir/hierarchy.c.o
+factory_server: CMakeFiles/factory_server.dir/variables.c.o
+factory_server: CMakeFiles/factory_server.dir/logic.c.o
 factory_server: CMakeFiles/factory_server.dir/build.make
 factory_server: CMakeFiles/factory_server.dir/compiler_depend.ts
 factory_server: /usr/local/lib/libopen62541.so.1.5.10
 factory_server: CMakeFiles/factory_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable factory_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/saf/opcua_factory/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable factory_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/factory_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
