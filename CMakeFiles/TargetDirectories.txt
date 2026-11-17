@@ -1,0 +1,3 @@
+/home/saf/opcua_factory/CMakeFiles/factory_server.dir
+/home/saf/opcua_factory/CMakeFiles/edit_cache.dir
+/home/saf/opcua_factory/CMakeFiles/rebuild_cache.dir

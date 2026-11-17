@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/factory_server.dir/link.d CMakeFiles/factory_server.dir/main.c.o CMakeFiles/factory_server.dir/factory_sensors.c.o -o factory_server  -Wl,-rpath,/usr/local/lib /usr/local/lib/libopen62541.so.1.5.10 -lpthread
