@@ -42,10 +42,10 @@ static void add_string_var(UA_Server *server, int parentNode, int varNode, char 
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), attr, NULL, NULL);
 }
 
-void add_production_variables(UA_Server *server) {
+void add_production_variables(UA_Server *server, const AppConfig *cfg) {
     // ProductionLine01 (1001)
-    add_string_var(server, 1001, 2001, "LineState", "STOPPED"); 
-    add_int32_var(server, 1001, 2002, "ProductionTarget", 100); 
+    add_string_var(server, 1001, 2001, "LineState", "STOPPED");
+    add_int32_var(server, 1001, 2002, "ProductionTarget", cfg->default_target);
     add_int32_var(server, 1001, 2003, "TotalProduced", 0);
     add_int32_var(server, 1001, 2004, "TotalAccepted", 0);
     add_int32_var(server, 1001, 2005, "TotalRejected", 0);
@@ -57,12 +57,12 @@ void add_production_variables(UA_Server *server) {
     // FeedingStation (1002)
     add_string_var(server, 1002, 3001, "State", "STOPPED");
     add_int32_var(server, 1002, 3002, "ProductsReceived", 0);
-    add_double_var(server, 1002, 3003, "ConveyorSpeed", 1.5);
+    add_double_var(server, 1002, 3003, "ConveyorSpeed", cfg->conveyor_speed);
 
     // AssemblyStation (1003)
     add_string_var(server, 1003, 3101, "State", "STOPPED");
     add_int32_var(server, 1003, 3102, "ProductsProcessed", 0);
-    add_double_var(server, 1003, 3103, "CycleTime", 5.0);
+    add_double_var(server, 1003, 3103, "CycleTime", cfg->cycle_time_sec);
 
     // InspectionStation (1004)
     add_string_var(server, 1004, 3201, "State", "STOPPED");
