@@ -1,0 +1,82 @@
+name: OPC UA Server CI
+
+on:
+  pull_request:
+    branches: [dev, main]
+  push:
+    branches: [dev, main]
+
+jobs:
+  build-test-scan:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install build, test, coverage, and static analysis tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential python3 cppcheck gcovr
+
+      - name: Cache open62541 v1.4.11
+        id: cache-open62541
+        uses: actions/cache@v4
+        with:
+          path: ~/open62541-install
+          key: open62541-v1.4.11-ubuntu24
+
+      - name: Build and install open62541 (if cache miss)
+        if: steps.cache-open62541.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 --branch v1.4.11 --recurse-submodules --shallow-submodules \
+            https://github.com/open62541/open62541.git /tmp/open62541
+          cmake -S /tmp/open62541 -B /tmp/open62541/build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=ON \
+            -DUA_NAMESPACE_ZERO=REDUCED \
+            -DCMAKE_INSTALL_PREFIX=$HOME/open62541-install
+          cmake --build /tmp/open62541/build -j$(nproc)
+          cmake --install /tmp/open62541/build
+
+      - name: Configure and build project with coverage
+        run: |
+          mkdir -p reports
+          cmake -B build \
+            -DCMAKE_PREFIX_PATH=$HOME/open62541-install \
+            -DENABLE_COVERAGE=ON
+          cmake --build build -j$(nproc)
+
+      - name: Run automated unit tests (CTest)
+        run: |
+          LD_LIBRARY_PATH=$HOME/open62541-install/lib \
+            ctest --test-dir build --output-on-failure -V | tee reports/test_results.txt
+
+      - name: Generate line coverage report (gcovr)
+        run: |
+          gcovr -r . --filter '(config|hierarchy|variables|logic)\.c$' \
+            --txt reports/coverage.txt --html-details reports/coverage.html
+          cat reports/coverage.txt
+
+      - name: Static analysis (cppcheck)
+        run: |
+          cppcheck --std=c99 --error-exitcode=1 \
+            main.c config.c hierarchy.c variables.c logic.c
+          cppcheck --std=c99 --enable=warning,performance,portability \
+            main.c config.c hierarchy.c variables.c logic.c 2>&1 | tee reports/cppcheck.txt
+
+      - name: Secret scan (Gitleaks)
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz \
+            -o /tmp/gitleaks.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          /tmp/gitleaks detect --source . --report-format json --report-path reports/gitleaks.json --verbose
+
+      - name: Upload CI reports as build artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ci-reports-${{ github.run_number }}
+          path: reports/

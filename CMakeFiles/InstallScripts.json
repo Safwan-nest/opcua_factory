@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/saf/opcua_factory/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

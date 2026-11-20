@@ -1,0 +1,7 @@
+build/
+reports/
+*.save
+*.o
+*.gcda
+*.gcno
+factory_server
