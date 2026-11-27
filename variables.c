@@ -53,20 +53,30 @@ void add_production_variables(UA_Server *server, const AppConfig *cfg) {
     add_bool_var(server, 1001, 2007, "AlarmActive", false);
     add_string_var(server, 1001, 2008, "FaultMessage", "None");
     add_int32_var(server, 1001, 2009, "FaultInjection", 0);
+    add_string_var(server, 1001, 2010, "WarningMessage", "None");
 
     // FeedingStation (1002)
     add_string_var(server, 1002, 3001, "State", "STOPPED");
     add_int32_var(server, 1002, 3002, "ProductsReceived", 0);
-    add_double_var(server, 1002, 3003, "ConveyorSpeed", cfg->conveyor_speed);
+    add_double_var(server, 1002, 3003, "ConveyorDeliveryRate", cfg->conveyor_speed);
+    add_string_var(server, 1002, 3004, "EfficiencyWarning", "None");
 
     // AssemblyStation (1003)
     add_string_var(server, 1003, 3101, "State", "STOPPED");
     add_int32_var(server, 1003, 3102, "ProductsProcessed", 0);
     add_double_var(server, 1003, 3103, "CycleTime", cfg->cycle_time_sec);
+    add_int32_var(server, 1003, 3104, "HousingCapacity", cfg->assembly_housing_capacity);
+    add_int32_var(server, 1003, 3105, "HousingCount", 0);
+    add_string_var(server, 1003, 3106, "EfficiencyWarning", "None");
 
     // InspectionStation (1004)
     add_string_var(server, 1004, 3201, "State", "STOPPED");
     add_int32_var(server, 1004, 3202, "ProductsInspected", 0);
     add_int32_var(server, 1004, 3203, "ProductsAccepted", 0);
     add_int32_var(server, 1004, 3204, "ProductsRejected", 0);
+    add_double_var(server, 1004, 3205, "CycleTime", cfg->inspection_cycle_time_sec);
+    add_int32_var(server, 1004, 3206, "HousingCapacity", cfg->inspection_housing_capacity);
+    add_int32_var(server, 1004, 3207, "HousingCount", 0);
+    add_string_var(server, 1004, 3208, "EfficiencyWarning", "None");
+    
 }

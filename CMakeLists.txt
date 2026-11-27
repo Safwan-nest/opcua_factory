@@ -13,26 +13,46 @@ add_executable(factory_server
     config.c
     hierarchy.c
     variables.c
+    ua_helpers.c
     logic.c
+    engine.c
 )
 target_compile_options(factory_server PRIVATE -Wall -Wextra -Wno-unused-parameter)
 target_link_libraries(factory_server open62541::open62541)
 
 enable_testing()
+
 add_executable(test_week1
     tests/test_week1.c
     config.c
     hierarchy.c
     variables.c
+    ua_helpers.c
     logic.c
+    engine.c
 )
 target_include_directories(test_week1 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(test_week1 PRIVATE -Wall -Wextra -Wno-unused-parameter)
 target_link_libraries(test_week1 open62541::open62541)
 
+add_executable(test_week2
+    tests/test_week2.c
+    config.c
+    hierarchy.c
+    variables.c
+    ua_helpers.c
+    engine.c
+)
+target_include_directories(test_week2 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_compile_options(test_week2 PRIVATE -Wall -Wextra -Wno-unused-parameter)
+target_link_libraries(test_week2 open62541::open62541)
+
 if(ENABLE_COVERAGE)
     target_compile_options(test_week1 PRIVATE --coverage -O0 -g)
     target_link_options(test_week1 PRIVATE --coverage)
+    target_compile_options(test_week2 PRIVATE --coverage -O0 -g)
+    target_link_options(test_week2 PRIVATE --coverage)
 endif()
 
 add_test(NAME week1_unit_tests COMMAND test_week1)
+add_test(NAME week2_unit_tests COMMAND test_week2)

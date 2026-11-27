@@ -4,14 +4,16 @@
 #include <string.h>
 
 void load_app_config(const char *filepath, AppConfig *cfg) {
-    // Safe fallback defaults if config.ini is missing or incomplete
     strncpy(cfg->hostname, "127.0.0.1", sizeof(cfg->hostname) - 1);
     cfg->hostname[sizeof(cfg->hostname) - 1] = '\0';
     cfg->port = 4840;
     cfg->cycle_interval_ms = 5000;
     cfg->default_target = 100;
-    cfg->conveyor_speed = 1.5;
-    cfg->cycle_time_sec = 5.0;
+    cfg->conveyor_speed = 1.0;
+    cfg->cycle_time_sec = 1.0;
+    cfg->assembly_housing_capacity = 10;
+    cfg->inspection_cycle_time_sec = 1.0;
+    cfg->inspection_housing_capacity = 10;
 
     FILE *fp = fopen(filepath, "r");
     if (!fp) {
@@ -43,6 +45,15 @@ void load_app_config(const char *filepath, AppConfig *cfg) {
         } else if (strcmp(key, "cycle_time_sec") == 0) {
             double c = atof(val);
             if (c > 0.0) cfg->cycle_time_sec = c;
+        } else if (strcmp(key, "assembly_housing_capacity") == 0) {
+            int cap = atoi(val);
+            if (cap > 0) cfg->assembly_housing_capacity = cap;
+        } else if (strcmp(key, "inspection_cycle_time_sec") == 0) {
+            double ic = atof(val);
+            if (ic > 0.0) cfg->inspection_cycle_time_sec = ic;
+        } else if (strcmp(key, "inspection_housing_capacity") == 0) {
+            int icap = atoi(val);
+            if (icap > 0) cfg->inspection_housing_capacity = icap;
         }
     }
     fclose(fp);
