@@ -1,102 +1,71 @@
 #include "logic.h"
+#include "engine.h"
+#include "ua_helpers.h"
 #include <open62541/plugin/log_stdout.h>
 
-static UA_Boolean is_running = false;
-static UA_Int32 total_produced = 0;
-static UA_Int32 total_accepted = 0;
-static UA_Int32 total_rejected = 0;
+static EngineState g_engine;
 
-// Method: StartLine [O09]
-static UA_StatusCode start_line_method(UA_Server *server,
-                                       const UA_NodeId *sessionId, void *sessionHandle,
-                                       const UA_NodeId *methodId, void *methodContext,
-                                       const UA_NodeId *objectId, void *objectContext,
-                                       size_t inputSize, const UA_Variant *input,
-                                       size_t outputSize, UA_Variant *output) {
-    is_running = true;
-    
-    // Update LineState to RUNNING
-    UA_Variant stateVar;
-    UA_String stateStr = UA_STRING("RUNNING");
-    UA_Variant_setScalar(&stateVar, &stateStr, &UA_TYPES[UA_TYPES_STRING]);
-    UA_Server_writeValue(server, UA_NODEID_NUMERIC(1, 2001), stateVar); // 2001 is LineState
-
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Production Line STARTED.");
-    return UA_STATUSCODE_GOOD;
+static UA_StatusCode start_line_method(UA_Server *s, const UA_NodeId *sId, void *sH,
+        const UA_NodeId *mId, void *mC, const UA_NodeId *oId, void *oC,
+        size_t inS, const UA_Variant *in, size_t outS, UA_Variant *out) {
+    return engine_start(s, &g_engine);
 }
 
-// Method: StopLine [O10]
-static UA_StatusCode stop_line_method(UA_Server *server,
-                                      const UA_NodeId *sessionId, void *sessionHandle,
-                                      const UA_NodeId *methodId, void *methodContext,
-                                      const UA_NodeId *objectId, void *objectContext,
-                                      size_t inputSize, const UA_Variant *input,
-                                      size_t outputSize, UA_Variant *output) {
-    is_running = false;
-    
-    // Update LineState to STOPPED
-    UA_Variant stateVar;
-    UA_String stateStr = UA_STRING("STOPPED");
-    UA_Variant_setScalar(&stateVar, &stateStr, &UA_TYPES[UA_TYPES_STRING]);
-    UA_Server_writeValue(server, UA_NODEID_NUMERIC(1, 2001), stateVar);
-
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Production Line STOPPED.");
-    return UA_STATUSCODE_GOOD;
+static UA_StatusCode stop_line_method(UA_Server *s, const UA_NodeId *sId, void *sH,
+        const UA_NodeId *mId, void *mC, const UA_NodeId *oId, void *oC,
+        size_t inS, const UA_Variant *in, size_t outS, UA_Variant *out) {
+    return engine_stop(s, &g_engine);
 }
 
-// 5-Second Production Loop [O11 - O18]
-static void production_loop_callback(UA_Server *server, void *data) {
-    if (!is_running) return;
+static UA_StatusCode reset_fault_method(UA_Server *s, const UA_NodeId *sId, void *sH,
+        const UA_NodeId *mId, void *mC, const UA_NodeId *oId, void *oC,
+        size_t inS, const UA_Variant *in, size_t outS, UA_Variant *out) {
+    return engine_reset_fault(s, &g_engine);
+}
 
-    total_produced++; // [O16]
-    
-    // Every 10th product is rejected [O14, O15]
-    if (total_produced % 10 == 0) {
-        total_rejected++; // [O18]
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Product #%d Processed -> REJECTED", total_produced);
-    } else {
-        total_accepted++; // [O17]
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Product #%d Processed -> ACCEPTED", total_produced);
+static UA_StatusCode reset_counters_method(UA_Server *s, const UA_NodeId *sId, void *sH,
+        const UA_NodeId *mId, void *mC, const UA_NodeId *oId, void *oC,
+        size_t inS, const UA_Variant *in, size_t outS, UA_Variant *out) {
+    return engine_reset_counters(s, &g_engine);
+}
+
+static void fault_monitor_cb(UA_Server *s, void *data) {
+    (void)data;
+    UA_Int32 fault_inj = read_int32(s, 2009, 0);
+    if (fault_inj < 0 || fault_inj > 3) {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
+                       "Invalid FaultInjection=%d; resetting to 0.", fault_inj);
+        update_int32(s, 2009, 0);
+        return;
     }
-
-    // Write updated totals to the OPC UA variables
-    UA_Variant val;
-    UA_Variant_setScalar(&val, &total_produced, &UA_TYPES[UA_TYPES_INT32]);
-    UA_Server_writeValue(server, UA_NODEID_NUMERIC(1, 2003), val); // TotalProduced
-    
-    UA_Variant_setScalar(&val, &total_accepted, &UA_TYPES[UA_TYPES_INT32]);
-    UA_Server_writeValue(server, UA_NODEID_NUMERIC(1, 2004), val); // TotalAccepted
-    
-    UA_Variant_setScalar(&val, &total_rejected, &UA_TYPES[UA_TYPES_INT32]);
-    UA_Server_writeValue(server, UA_NODEID_NUMERIC(1, 2005), val); // TotalRejected
+    if (fault_inj >= 1 && fault_inj != g_engine.active_fault_station) {
+        engine_apply_fault(s, &g_engine, fault_inj);
+    }
 }
 
-void initialize_production_logic(UA_Server *server) {
-    // 1. Add StartLine Method to ProductionLine01 (Node 1001) [O09]
-    UA_MethodAttributes startAttr = UA_MethodAttributes_default;
-    startAttr.displayName = UA_LOCALIZEDTEXT("en-US", "StartLine");
-    startAttr.executable = true;
-    startAttr.userExecutable = true;
-    UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 4001),
-                            UA_NODEID_NUMERIC(1, 1001),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "StartLine"),
-                            startAttr, &start_line_method,
-                            0, NULL, 0, NULL, NULL, NULL);
+static void production_loop_cb(UA_Server *s, void *data) {
+    (void)data;
+    engine_step(s, &g_engine, 0.5);
+}
 
-    // 2. Add StopLine Method to ProductionLine01 [O10]
-    UA_MethodAttributes stopAttr = UA_MethodAttributes_default;
-    stopAttr.displayName = UA_LOCALIZEDTEXT("en-US", "StopLine");
-    stopAttr.executable = true;
-    stopAttr.userExecutable = true;
-    UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 4002),
-                            UA_NODEID_NUMERIC(1, 1001),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "StopLine"),
-                            stopAttr, &stop_line_method,
-                            0, NULL, 0, NULL, NULL, NULL);
+static void add_method(UA_Server *s, UA_UInt32 mId, char *name, UA_MethodCallback cb) {
+    UA_MethodAttributes attr = UA_MethodAttributes_default;
+    attr.displayName = UA_LOCALIZEDTEXT("en-US", name);
+    attr.executable = true;
+    attr.userExecutable = true;
+    UA_Server_addMethodNode(s, UA_NODEID_NUMERIC(1, mId), UA_NODEID_NUMERIC(1, 1001),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT), UA_QUALIFIEDNAME(1, name),
+                            attr, cb, 0, NULL, 0, NULL, NULL, NULL);
+}
 
-    // 3. Register the 5-second (5000ms) callback loop [O11]
-    UA_UInt64 callbackId = 0;
-    UA_Server_addRepeatedCallback(server, production_loop_callback, NULL, 5000, &callbackId);
+void initialize_production_logic(UA_Server *server, const AppConfig *cfg) {
+    engine_init(&g_engine, cfg);
+    add_method(server, 4001, "StartLine", &start_line_method);
+    add_method(server, 4002, "StopLine", &stop_line_method);
+    add_method(server, 4003, "ResetFault", &reset_fault_method);
+    add_method(server, 4004, "ResetCounters", reset_counters_method);
+
+    UA_UInt64 fId = 0, pId = 0;
+    UA_Server_addRepeatedCallback(server, fault_monitor_cb, NULL, 1000, &fId);
+    UA_Server_addRepeatedCallback(server, production_loop_cb, NULL, 500, &pId);
 }
